@@ -24,42 +24,46 @@ class MazeGen
     void display(vector<int> disp)
     {
         cout<<"|";
-        
-        cout<<"|";
-        cout<<endl;
-    }
-    
-    void output()
-    {
-        
-        cout<<"|"
-        for(int i=0; i < size; i++)
-        {            
-            if(curr[i] == next[i])//
+        for(int square: disp)
+        {
+            if(square>=2)
             {
-                if(rand()%(int)(wallChance*60) < wallChance)
-                {
-                    cout<<"8";
-                }
-                else
-                {
-                    cout<<" ";
-                }
+                cout<<"_";
+                square -=2;
             }
             else
             {
-                cout<<"_";
+                cout<<" ";
             }
-            if(curr[i] != curr[i+1] && (rand()%(int)(wallChance*1.3)) < wallChance)
+            if(square>=1)
             {
                 cout<<"0";
+                square -=1;
             }
             else
             {
                 cout<<" ";
             }
         }
-        cout<<"|"<<endl;
+        cout<<"|";
+        cout<<endl;
+    }
+    
+    vector<int> output()//1 for side wall,2 for bottom wall, 3 for both
+    {
+        vector<int> ret(size);
+        for(int i=0; i < size; i++)
+        {
+            if((i!=size-1) && curr[i] != curr[i+1])
+            {
+                ret[i]+=1;
+            }       
+            if(curr[i] != next[i])
+            {
+               ret[i]+=2;               
+            }
+        }
+        return ret;
     }
     
     void generate()
@@ -123,7 +127,7 @@ class MazeGen
         while(run)
         { 
             generate();           
-            output();
+            display(output());
             run--;
         }
     }    
