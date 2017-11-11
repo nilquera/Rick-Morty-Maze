@@ -1,1 +1,0 @@
-# HackSussex2017
