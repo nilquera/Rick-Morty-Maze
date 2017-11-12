@@ -1,119 +1,110 @@
-function Maze()
-{
-    this.size;//Number of rows, an input
 
-    this.toVisit = [1,2,3,4];//Used in logic -> these variables shouldn't be used directly, mainpulate columns with generateBoard() 
+function Maze(sizeIn, mortyNumIn)
+{
+    if(sizeIn == undefined)
+    {
+        sizeI = 8;//Default number of rows
+    }
+    
+    this.size = sizeIn;//number of rows
+
+    if(mortyNumIn == undefined)
+    {
+        mortyNumIn = 1;//Default morty
+    }    
+    //this.morty= new Sprite(mortyNumIn,"");//morty Sprite
+
+    this.toVisit = [1,2,3,4];//Used in logic -> these variables shouldn't be changed directly, mainpulate columns with generateBoard() 
     this.visited;//Used in logic
     
     this.board = [];//Holds all the columns currently available
     this.score = 0;//Keeps track of which column is at the left-most side of the screen
     
-    this.morty;//Morty sprite
     
-    this.playerX = 0;//Player position
+    this.playerX = 0;//the player position
     this.playerY = 0;
 
 
-    this.SQUARE_WIDTH = (temp);//Width of each square
-    this.WIDTH;//Overall canvas width 
-    this.SQUARE_HEIGHT = (temp);//Height of each square
-    this.HEIGHT;//Overall canvas height - depends on size
+    this.SQUARE_WIDTH = 51;//Width of each square
+    this.WIDTH = this.SQUARE_WIDTH * (sizeIn+3);//Overall canvas width 
+    this.SQUARE_HEIGHT = 30;//Height of each square
+    this.HEIGHT = this.SQUARE_HEIGHT * sizeIn;//Overall canvas height - depends on this.size
     
-    this.canvas;
-    this.context;
+    this.canvas = document.getElementById("gc");
+    this.canvas.width = this.WIDTH;
+    this.canvas.height = this.HEIGHT;
     
-    this.timeLeft = 40;//Amout of time the user has left
+    this.context = this.canvas.getContext("2d");
+    this.context.fillStyle = "rgb(0,43,54)";
+    this.context.strokeStyle = "rgb(131,148,150)";
     
-    this.key = {
-        RIGHT: {code: 39, pressed:false},
-        LEFT : {code: 37, pressed:false},
-        UP:    {code: 38, pressed:false},
-        DOWN : {code: 40, pressed:false}       
-    };
+    this.timeLeft = 40;//Amount of time the user has left
+    
 }
 
-Maze.protype.intialize = function(size, mortyNum)
-{
-    if(size == undefined)
+
+Maze.prototype.setSquare = function(currX, currY)
     {
-        size =(temp);//Default number of rows
-    }
-    
-    this.size = size;
         
-    //Fill the board for the first time
-    
-    if(mortyNum == undefined)
-    {
-        mortyNum = 1;//Default morty
-    } 
-    
-    this.morty= new Sprite(mortyNum,(temp(path of morty images));
-    this.WIDTH = this.SQUARE_WIDTH * (size+3);
-    this.HEIGHT = this.SQUARE_HEIGHT * size;        
-}
-
-Maze.prototype.setSquare(currX, currY)
-    {
         var nextX;
         var nextY;
         
-        visited[currY][currX] = true;
+        this.visited[currY][currX] = true;
         
-        for (var i = toVisit.length - 1; i > 0; i--) {
+        for (var i = this.toVisit.length - 1; i > 0; i--) {
             var j = Math.floor(Math.random() * (i + 1));
-            var temp = toVisit[i];
-            toVisit[i] = toVisit[j];
-            toVisit[j] = temp;
+            var temp = this.toVisit[i];
+            this.toVisit[i] = this.toVisit[j];
+            this.toVisit[j] = temp;
         }   
         
-        for(var i = 0; i < toVisit.length; i++)
+        for(var i = 0; i < this.toVisit.length; i++)
         {
                 nextX= currX;
                 nextY = currY;
-                if(next == 1)//North
+                if(this.toVisit[i] == 1)//North
                 {
                     nextY = currY -1;
                 }
-                else if(next == 2)//South
+                else if(this.toVisit[i] == 2)//South
                 {
                     nextY = currY + 1;
                 }
-                else if(next == 3)//East
+                else if(this.toVisit[i] == 3)//East
                 {
                     nextX = currX+1;
                 }
-                else if(next == 4)//West
+                else if(this.toVisit[i] == 4)//West
                 {
                     nextX = currX-1;
                 }
                 
                 
-                if(nextX >= 0 && nextX < side && nextY >= 0 && nextY < side && (!visited[nextY][nextX]))//Valid, non-visited index
+                if(nextX >= 0 && nextX < this.size && nextY >= 0 && nextY < this.size && (!this.visited[nextY][nextX]))//Valid, non-visited index
                 {   
                     
-                    if(next==1)
+                    if(this.toVisit[i]==1)
                     {  
-                        board[currY][currX][0] = 0;
-                        board[nextY][nextX][1] = 0;
+                        this.board[currY][currX][0] = 0;
+                        this.board[nextY][nextX][1] = 0;
                     }
-                    else if (next == 2)
+                    else if (this.toVisit[i] == 2)
                     {   
-                        board[currY][currX][1] = 0;
-                        board[nextY][nextX][0] = 0;                        
+                        this.board[currY][currX][1] = 0;
+                        this.board[nextY][nextX][0] = 0;                        
                     }
-                    else if (next == 3)
+                    else if (this.toVisit[i] == 3)
                     {
-                        board[currY][currX][2] = 0;
-                        board[nextY][nextX][3] = 0;                                          
+                        this.board[currY][currX][2] = 0;
+                        this.board[nextY][nextX][3] = 0;                                          
                     }
-                    else if (next == 4)
+                    else if (this.toVisit[i] == 4)
                     {   
-                        board[currY][currX][3] = 0;
-                        board[nextY][nextX][2] = 0;                                         
+                        this.board[currY][currX][3] = 0;
+                        this.board[nextY][nextX][2] = 0;                                         
                     }
                     
-                    this. setSquare(nextX,nextY);
+                    this.setSquare(nextX,nextY);
                 }
                 
             }
@@ -121,33 +112,54 @@ Maze.prototype.setSquare(currX, currY)
 
 Maze.prototype.generateBoard = function()//Generates a new board - Algorithm detailed at http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking
 {        
-    this.board = [];
-    this.visited = [];
-    for(var i= 0; i< size; i++)
+    var tempBoard = [];
+    var tempVisited = [];
+    
+    
+    for(var i= 0; i< this.size; i++)
     {
-        this.board.push([]);
-        this.visited.push([]);
-        for(var j = 0; j < size; j++)
+        tempBoard.push([]);
+        tempVisited.push([]);
+        for(var j = 0; j < this.size; j++)
         {
-            this.board.push([1,1,1,1]);
-            this.visited.push([false,false,false,false]);
+            tempBoard[i].push([1,1,1,1]);
+            tempVisited[i].push(false);
         }
+        
     }
+    
+    this.board = tempBoard;
+    this.visited = tempVisited;
     
     var startX = 0;
     var startY = 0;
     
+    
     this.setSquare(startX,startY);
     
-    board[0][0][3] = 0;
-    board[size][size][2] = 0;
+    this.board[0][0][3] = [0,0,0,0];
+    this.board[this.size-1][this.size-1] = [0,0,0,0];
+    
+    for(var i = 0; i < this.size; i++)
+    {
+        for(var j=0; j < this.size; j++)
+        {
+            for(var k=0; k < 4; k++)
+            {
+                if(Math.random()*100 <=10)
+                {
+                    this.board[i][j][k] = 0;
+                }
+            }
+        }
+    }
     
     
     for(var i=0; i < 3; i++)//Adds buffer area inbetween each one
     {
         this.board.push([]);
         this.board[i].push([1,0,0,0]);
-        for(var j=1; j < size; j++)
+        for(var j=1; j < this.size; j++)
         {
             this.board[i].push([0,0,0,0]);
         }
@@ -156,51 +168,98 @@ Maze.prototype.generateBoard = function()//Generates a new board - Algorithm det
 
 Maze.prototype.draw = function()
 {
-    //Set background
-    //Draw an empty block for each square on the board, give it a border based on the data
-    //When on the square that the player is on, draw the player
-    //Show score and timer
+    this.context.fillRect(0,0,this.WIDTH,this.HEIGHT);    
+        
+    for(var i=0; i < this.size; i++)
+    {
+        for(var j=0; j < this.size; j++)
+        {   
+            this.context.beginPath()
+            this.context.moveTo(i*this.SQUARE_WIDTH, j*this.SQUARE_HEIGHT);
+            if(this.board[i][j][0]==1)//North wall
+            {
+                this.context.lineTo(i*this.SQUARE_WIDTH,(j+1)*this.SQUARE_HEIGHT);
+            }
+            else
+            {
+                this.context.moveTo(i*this.SQUARE_WIDTH,(j+1)*this.SQUARE_HEIGHT); 
+            }
+            if(this.board[i][j][2]==1)//East Wall
+            {
+                this.context.lineTo((i+1)*this.SQUARE_WIDTH,(j+1)*this.SQUARE_HEIGHT);
+            }
+            else
+            {
+                this.context.moveTo((i+1)*this.SQUARE_WIDTH,(j+1)*this.SQUARE_HEIGHT); 
+            }
+            if(this.board[i][j][1]==1)//South wall
+            {
+                this.context.lineTo((i+1)*this.SQUARE_WIDTH,j*this.SQUARE_HEIGHT);
+            }
+            else
+            {
+                this.context.moveTo((i+1)*this.SQUARE_WIDTH,j*this.SQUARE_HEIGHT); 
+            }
+            if(this.board[i][j][3]==1)
+            {
+                this.context.lineTo(i*this.SQUARE_WIDTH,j*this.SQUARE_HEIGHT);
+            }
+            else
+            {
+                this.context.moveTo(i*this.SQUARE_WIDTH,j*this.SQUARE_HEIGHT); 
+            }
+            this.context.stroke();       
+        }
+    }
+    
+    this.context.clearRect(this.playerY*this.SQUARE_WIDTH +1, this.playerX*this.SQUARE_HEIGHT+1,this.SQUARE_WIDTH-2,this.SQUARE_HEIGHT-2);
 }
 
-Maze.prototype.update = function()
+Maze.prototype.update = function(event)
 {
-    var curr = board[playerY][playerX];
     
-    if(this.key.UP.pressed && curr[0]==0)
+    var curr = this.board[this.playerY][this.playerX];
+    if(event.keyCode == 37 && curr[0]==0)
     {
-        playerY = playerY -1;
+        this.playerY = this.playerY -1;
     }
-    else if(this.key.DOWN.pressed && curr[1]==0)
+    else if(event.keyCode == 39 && curr[1]==0)
     {
-        playerY = playerY + 1;
+        this.playerY = this.playerY + 1;
     }
-    else if(this.key.RIGHT.pressed && curr[2]==0)
+    else if(event.keyCode == 40 && curr[2]==0)
     {
-        if(playerX == size+2)
+        if(this.playerX == this.size+2)
         {
-            if(player[y] == 0)
+            if(this.player[y] == 0)
             {
                 this.generateBoard();
-                playerX = 0;
+                this.playerX = 0;
             }
         }
         else
         {
-            playerX = playerX +1;
+            this.playerX = this.playerX +1;
         }
     }
-    else if(this.key.LEFT.pressed && curr[3]==0 && playerX != 0)
+    else if(event.keyCode == 38 && curr[3]==0 && this.playerX != 0)
     {
-        playerX = playerX - 1;
+        this.playerX = this.playerX - 1;
     }
 }
 
-function mainLoop
+
+var maze = new Maze(30,1);
+maze.generateBoard();
+document.addEventListener('keydown', function(event){maze.update(event);});
+function mainLoop()
 { 
- 
+   maze.draw();
 }
+var ONE_FRAME_TIME = 1000/15;
+setInterval( mainLoop, ONE_FRAME_TIME );
 
-
+/*
 function Sprite()
 {
     this.mortyNum;
@@ -219,41 +278,9 @@ Sprite.prototype.getImagePath()
     curr = (curr%3)+1;
     return path+mortyNum+"-"+curr;
 }
+*/
 
-//TODO: 
-//1.Drawing the maze, player, score
 //3.Adding the timer and how to stop
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
