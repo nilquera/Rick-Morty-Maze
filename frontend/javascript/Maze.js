@@ -9,13 +9,13 @@ function Maze()
     this.score = 0;//Keeps track of which column is at the left-most side of the screen
     
     this.morty;//Morty sprite
-    this.wall = new Sprite(-1,(temp(location of wall image)));//Wall sprite
     
     this.playerX = 0;//Player position
     this.playerY = 0;
-        
+
+
     this.SQUARE_WIDTH = (temp);//Width of each square
-    this.WIDTH = this.SQUARE_WIDTH * (temp);//Overall canvas width 
+    this.WIDTH;//Overall canvas width 
     this.SQUARE_HEIGHT = (temp);//Height of each square
     this.HEIGHT;//Overall canvas height - depends on size
     
@@ -47,8 +47,10 @@ Maze.protype.intialize = function(size, mortyNum)
     {
         mortyNum = 1;//Default morty
     } 
+    
     this.morty= new Sprite(mortyNum,(temp(path of morty images));
-    this.HEIGHT = this.SQUARE_HEIGHT * (size+2);        
+    this.WIDTH = this.SQUARE_WIDTH * (size+3);
+    this.HEIGHT = this.SQUARE_HEIGHT * size;        
 }
 
 Maze.prototype.setSquare(currX, currY)
@@ -125,7 +127,7 @@ Maze.prototype.generateBoard = function()//Generates a new board - Algorithm det
     {
         this.board.push([]);
         this.visited.push([]);
-        var(j = 0; j < size; j++)
+        for(var j = 0; j < size; j++)
         {
             this.board.push([1,1,1,1]);
             this.visited.push([false,false,false,false]);
@@ -136,7 +138,68 @@ Maze.prototype.generateBoard = function()//Generates a new board - Algorithm det
     var startY = 0;
     
     this.setSquare(startX,startY);
+    
+    board[0][0][3] = 0;
+    board[size][size][2] = 0;
+    
+    
+    for(var i=0; i < 3; i++)//Adds buffer area inbetween each one
+    {
+        this.board.push([]);
+        this.board[i].push([1,0,0,0]);
+        for(var j=1; j < size; j++)
+        {
+            this.board[i].push([0,0,0,0]);
+        }
+    }
 }
+
+Maze.prototype.draw = function()
+{
+    //Set background
+    //Draw an empty block for each square on the board, give it a border based on the data
+    //When on the square that the player is on, draw the player
+    //Show score and timer
+}
+
+Maze.prototype.update = function()
+{
+    var curr = board[playerY][playerX];
+    
+    if(this.key.UP.pressed && curr[0]==0)
+    {
+        playerY = playerY -1;
+    }
+    else if(this.key.DOWN.pressed && curr[1]==0)
+    {
+        playerY = playerY + 1;
+    }
+    else if(this.key.RIGHT.pressed && curr[2]==0)
+    {
+        if(playerX == size+2)
+        {
+            if(player[y] == 0)
+            {
+                this.generateBoard();
+                playerX = 0;
+            }
+        }
+        else
+        {
+            playerX = playerX +1;
+        }
+    }
+    else if(this.key.LEFT.pressed && curr[3]==0 && playerX != 0)
+    {
+        playerX = playerX - 1;
+    }
+}
+
+function mainLoop
+{ 
+ 
+}
+
 
 function Sprite()
 {
@@ -153,22 +216,13 @@ Sprite.prototype.initialise(mortyNum,path)
 
 Sprite.prototype.getImagePath()
 {
-    if(mortyNum == -1)//If it's not a morty sprite
-    {
-        return path;
-    }
-    else//If it is a morty sprite
-    {
-        curr = (curr%3)+1;
-        return path+mortyNum+"-"+curr;
-    }
+    curr = (curr%3)+1;
+    return path+mortyNum+"-"+curr;
 }
 
 //TODO: 
 //1.Drawing the maze, player, score
-//4.When to add new rows
 //3.Adding the timer and how to stop
-//2.Moving the player
 
 
 
