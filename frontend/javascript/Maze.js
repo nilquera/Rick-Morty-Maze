@@ -1,10 +1,9 @@
 function Maze()
 {
     this.size;//Number of rows, an input
-    this.nextNum;//Used in logic, ignore
 
-    this.curr = [];//Used in logic, ignore -> these two variables shouldn't be used directly, mainpulate columns with generateRow() and getRow()
-    this.next = [];//Used in logic, ignore
+    this.toVisit = [1,2,3,4];//Used in logic -> these variables shouldn't be used directly, mainpulate columns with generateBoard() 
+    this.visited;//Used in logic
     
     this.board = [];//Holds all the columns currently available
     this.score = 0;//Keeps track of which column is at the left-most side of the screen
@@ -41,17 +40,8 @@ Maze.protype.intialize = function(size, mortyNum)
     }
     
     this.size = size;
-    this.nextNum = size;
-    for(var i=0; i < size;i++)//Default fills the first row, part of logic
-    {
-        curr.push(i);
-    }
-    
-    for(int i=0; i <(temp(num of horizontal squares)); i++)//Fills the board for the first time
-    {
-        this.generateRow();
-        board.push(this.getRow());
-    }
+        
+    //Fill the board for the first time
     
     if(mortyNum == undefined)
     {
@@ -61,86 +51,92 @@ Maze.protype.intialize = function(size, mortyNum)
     this.HEIGHT = this.SQUARE_HEIGHT * (size+2);        
 }
 
-Maze.prototype.getRow = function()//Returns output in easier format - 1 for bottom wall,2 for side wall, 3 for both
-{
-    ret = []
-    for(int i=0; i < size; i++)
+Maze.prototype.setSquare(currX, currY)
     {
-        ret.push(0)
-        if((i!=size-1) && curr[i] != curr[i+1])
-        {
-            ret[i]+=1;
-        }       
-        if(curr[i] != next[i])
-        {
-           ret[i]+=2;               
-        }
-    }
-    return ret;
-}
-
-Maze.prototype.generateRow = function()//Generates a new row - Algorithm detailed at http://weblog.jamisbuck.org/2010/12/29/maze-generation-eller-s-algorithm
-{        
-    curr = next;
+        var nextX;
+        var nextY;
         
-    for(var i=0; i < size; i++)//Merging adjacent sets
-    {
-        if((Math.random()<0.5 && curr[i] != curr[i+1] )
-        {
-            curr[i+1] = curr[i];
-            i++;
-        }
-    }
+        visited[currY][currX] = true;
         
-               
-    next = [];
-    for(var i=0; i < size; i++)
-    {
-        next.push(0);
-    }   
+        for (var i = toVisit.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = toVisit[i];
+            toVisit[i] = toVisit[j];
+            toVisit[j] = temp;
+        }   
         
-    var space = true;
-    for(var i=0; i < size; i++)//Adding links to next row
-    {
-        space = false;
-        for(var j=i;curr[j] == curr[j+1];j++)//Loops through each set
+        for(var i = 0; i < toVisit.length; i++)
         {
-            
-            if( (Math.random()<0.5)
-            {
-                next[j] = curr[j];
-                space = true;
+                nextX= currX;
+                nextY = currY;
+                if(next == 1)//North
+                {
+                    nextY = currY -1;
+                }
+                else if(next == 2)//South
+                {
+                    nextY = currY + 1;
+                }
+                else if(next == 3)//East
+                {
+                    nextX = currX+1;
+                }
+                else if(next == 4)//West
+                {
+                    nextX = currX-1;
+                }
+                
+                
+                if(nextX >= 0 && nextX < side && nextY >= 0 && nextY < side && (!visited[nextY][nextX]))//Valid, non-visited index
+                {   
+                    
+                    if(next==1)
+                    {  
+                        board[currY][currX][0] = 0;
+                        board[nextY][nextX][1] = 0;
+                    }
+                    else if (next == 2)
+                    {   
+                        board[currY][currX][1] = 0;
+                        board[nextY][nextX][0] = 0;                        
+                    }
+                    else if (next == 3)
+                    {
+                        board[currY][currX][2] = 0;
+                        board[nextY][nextX][3] = 0;                                          
+                    }
+                    else if (next == 4)
+                    {   
+                        board[currY][currX][3] = 0;
+                        board[nextY][nextX][2] = 0;                                         
+                    }
+                    
+                    this. setSquare(nextX,nextY);
+                }
+                
             }
-            i++;
-        }
-        if(!space)
+    }
+
+Maze.prototype.generateBoard = function()//Generates a new board - Algorithm detailed at http://weblog.jamisbuck.org/2010/12/27/maze-generation-recursive-backtracking
+{        
+    this.board = [];
+    this.visited = [];
+    for(var i= 0; i< size; i++)
+    {
+        this.board.push([]);
+        this.visited.push([]);
+        var(j = 0; j < size; j++)
         {
-            next[i] = curr[i];//At this point j is the last index in that set
+            this.board.push([1,1,1,1]);
+            this.visited.push([false,false,false,false]);
         }
     }
-        
-        
-    for(var i=0; i < size; i++)
-    {
-        if(next[i] == 0)
-        {
-            next[i] = nextNum++;
-        }
-    }    
+    
+    var startX = 0;
+    var startY = 0;
+    
+    this.setSquare(startX,startY);
 }
-
-Maze.prototype.addRow = function()//Generates a new row and adds it to the end of the board
-{
-    this.score++;
-    if(score%10 == 0)
-    {
-        this.timeLeft += 10;
-    }
-    board = board.splice(index,1);
-    this.generateRow();
-    board.push(this.getRow())
-}
-
 
 function Sprite()
 {
