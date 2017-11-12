@@ -1,15 +1,21 @@
 *{
   font-family: sans-serif;
 }
+*{
+  font-family: sans-serif;
+}
 
 body {
 	background: #3CBC8D;
 	margin: 0px;
+	min-width: 900px;
+	text-align:center;
 }
 
 body #imatges {
-  position:fixed;
-  top:50%;
+  position:fixed;  
+  bottom: 0px;
+  right: 20px;
 }
 
 body #imatges img{
@@ -17,19 +23,6 @@ body #imatges img{
   width: auto;
 }
 
-#imatges #left{
-  position:absolute;
-  left:50px;
-  -moz-transform: scale(-1, 1);
-    -o-transform: scale(-1, 1);
-    -webkit-transform: scale(-1, 1);
-    transform: scale(-1, 1);
-}
-
-#imatges #right{
-  position:absolute;
-  left: 1000px;
-}
 
 #header {
 	width:100%;
@@ -50,7 +43,6 @@ body #imatges img{
   padding:5px 100px;
   margin-bottom: 100px;
 }
-
 .question {
   margin:100px 0px;
 }
