@@ -57,15 +57,10 @@ body #imatges img{
   padding: 16px 20px;
   border: none;
   border-bottom: 2px solid #184e3a;
-  background-color: transparent;
+  background-color: #ffffff;
+  color:#0000ff
 }
 
-.question select option {
-  background-color:transparent;
-}
-.question select option:hover {
-  background-color:white;
-}
 
 form input[type=submit] {
   width:auto;
