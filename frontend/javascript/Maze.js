@@ -17,8 +17,8 @@ function Maze(sizeIn, mortyNumIn)
     this.toVisit = [1,2,3,4];//Used in logic -> these variables shouldn't be changed directly, mainpulate columns with generateBoard() 
     this.visited;//Used in logic
     
-    this.board = [];//Holds all the columns currently available
-    this.score = 0;//Keeps track of which column is at the left-most side of the screen
+    this.board = [];//Holds the current board
+    this.score = 0;
     
     
     this.playerX = 0;//the player position
@@ -159,10 +159,11 @@ Maze.prototype.generateBoard = function()//Generates a new board - Algorithm det
     {
         this.board.push([]);
         this.board[i].push([1,0,0,0]);
-        for(var j=1; j < this.size; j++)
+        for(var j=1; j < this.size-1; j++)
         {
-            this.board[i].push([0,0,0,0]);
+            this.board[i].push([1,1,1,1]);
         }
+        this.board.push([0,1,0,0]);
     }
 }
 
@@ -171,7 +172,7 @@ Maze.prototype.draw = function()
     this.context.fillRect(0,0,this.WIDTH,this.HEIGHT);    
         
     for(var i=0; i < this.size; i++)
-    {
+    {    
         for(var j=0; j < this.size; j++)
         {   
             this.context.beginPath()
@@ -212,13 +213,26 @@ Maze.prototype.draw = function()
         }
     }
     
-    this.context.clearRect(this.playerY*this.SQUARE_WIDTH +1, this.playerX*this.SQUARE_HEIGHT+1,this.SQUARE_WIDTH-2,this.SQUARE_HEIGHT-2);
+    this.context.clearRect(this.playerY*this.SQUARE_WIDTH +2, this.playerX*this.SQUARE_HEIGHT+2,this.SQUARE_WIDTH-4,this.SQUARE_HEIGHT-4);
+    this.context.clearRect(this.SQUARE_WIDTH * (this.size+2), 0, this.SQUARE_WIDTH,this.SQUARE_HEIGHT); 
 }
 
 Maze.prototype.update = function(event)
 {
+    var curr;
+    if(this.playerX >= this.size || this.playerY >= this.size)
+    {
+        curr = [0,0,0,0];
+        if(this.playerY== this.size+2)
+        {
+            curr[1] = 1;
+        }
+    }
+    else
+    {
+        curr = this.board[this.playerY][this.playerX];
+    }
     
-    var curr = this.board[this.playerY][this.playerX];
     if(event.keyCode == 37 && curr[0]==0)
     {
         this.playerY = this.playerY -1;
@@ -229,22 +243,19 @@ Maze.prototype.update = function(event)
     }
     else if(event.keyCode == 40 && curr[2]==0)
     {
-        if(this.playerX == this.size+2)
-        {
-            if(this.player[y] == 0)
-            {
-                this.generateBoard();
-                this.playerX = 0;
-            }
-        }
-        else
-        {
-            this.playerX = this.playerX +1;
-        }
+      this.playerX = this.playerX +1;
     }
     else if(event.keyCode == 38 && curr[3]==0 && this.playerX != 0)
     {
         this.playerX = this.playerX - 1;
+    }
+    
+    if(this.playerY == this.size+2 && this.playerX == 0)
+    {
+        this.playerY = 0;
+        this.generateBoard();
+        this.score++;
+        document.getElementById(value).innerHTML = this.score.toString();
     }
 }
 

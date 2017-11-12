@@ -21,21 +21,12 @@ body {
 }*/
 
 #sessionmorty{
-  position:absolute;
-  margin-left: 20px;
+  position:relative;
+  margin-left:0;
 }
 
 #sessionmorty img{
   height: 300px;
   border-bottom: 5px solid;
   border-right: 5px solid;
-}
-
-#maze-square{
-  margin-top: 55px;
-  margin-left: auto;
-  margin-right: 30px;
-  width: 70%;
-  height: 550px;
-  background: green;
 }
