@@ -29,16 +29,17 @@
           $morty1 =+ 1;
           break;
       case 'nihilistic' :
-          $morty1 =+ 1;
+          $morty3 =+ 1;
+          $morty6 =+ 1;
           break;
       case 'gross' :
-          $morty1 =+ 1;
+          $morty9 =+ 1;
           break;
       case 'evil' :
-          $morty1 =+ 1;
+          $morty4 =+ 1;
+          $morty8 =+ 1;
           break;
       default:
-          $morty1 =+ 1;
           break;
   }
 
@@ -46,22 +47,26 @@
   switch ( $_POST['question2'] )
   {
       case 'pizza' :
-          $morty1 =+ 1;
+          $morty7 =+ 1;
+          $morty10 =+ 1;
           break;
       case 'breakfast-cereal' :
-          $morty1 =+ 1;
+          $morty5 =+ 1;
+          $morty8 =+ 1;
           break;
       case 'eggs' :
-          $morty1 =+ 1;
+          $morty2 =+ 1;
+          $morty4 =+ 1;
           break;
       case 'szechuan' :
           $morty1 =+ 1;
+          $morty3 =+ 1;
+          $morty6 =+ 1;
           break;
       case 'sausage' :
-          $morty1 =+ 1;
+          $morty9 =+ 20;
           break;
       default:
-          $morty1 =+ 1;
           break;
   }
 
@@ -69,19 +74,24 @@
   switch ( $_POST['question3'] )
   {
       case 'einstein' :
-          $morty1 =+ 1;
+          $morty5 =+ 1;
+          $morty4 =+ 1;
           break;
       case 'normalbrain' :
           $morty1 =+ 1;
+          $morty3 =+ 1;
+          $morty6 =+ 1;
           break;
       case 'slightlyoffmentally' :
-          $morty1 =+ 1;
+          $morty2 =+ 1;
+          $morty8 =+ 1;
           break;
       case 'moron' :
-          $morty1 =+ 1;
+          $morty10 =+ 1;
+          $morty9 =+ 1;
+          $morty7 =+ 1;
           break;
       default:
-          $morty1 =+ 1;
           break;
   }
 
@@ -89,16 +99,22 @@
   switch ( $_POST['question4'] )
   {
       case 'well' :
-          $morty1 =+ 1;
+          $morty2 =+ 1;
+          $morty3 =+ 1;
+          $morty4 =+ 1;
           break;
       case 'cringe' :
           $morty1 =+ 1;
+          $morty6 =+ 1;
+          $morty7 =+ 1;
+          $morty8 =+ 1;
           break;
       case 'curl' :
-          $morty1 =+ 1;
+          $morty5 =+ 1;
+          $morty9 =+ 1;
+          $morty10 =+ 1;
           break;
       default:
-          $morty1 =+ 1;
           break;
   }
 
@@ -106,19 +122,24 @@
   switch ( $_POST['question5'] )
   {
       case 'god' :
-          $morty1 =+ 1;
+          $morty5 =+ 1;
+          $morty10 =+ 1;
           break;
       case 'love' :
           $morty1 =+ 1;
+          $morty6 =+ 1;
           break;
       case 'humanity' :
-          $morty1 =+ 1;
+          $morty7 =+ 1;
+          $morty9 =+ 1;
           break;
       case 'nothing' :
-          $morty1 =+ 1;
+          $morty2 =+ 1;
+          $morty3 =+ 1;
+          $morty4 =+ 1;
+          $morty8 =+ 1;
           break;
       default:
-          $morty1 =+ 1;
           break;
   }
 
@@ -126,19 +147,24 @@
   switch ( $_POST['question6'] )
   {
       case 'gee' :
-          $morty1 =+ 1;
+          $morty5 =+ 1;
+          $morty7 =+ 1;
+          $morty10 =+ 1;
           break;
       case 'awesome' :
           $morty1 =+ 1;
+          $morty4 =+ 1;
           break;
       case 'snorf' :
-          $morty1 =+ 1;
+          $morty6 =+ 1;
+          $morty9 =+ 1;
           break;
       case 'bad' :
-          $morty1 =+ 1;
+          $morty2 =+ 1;
+          $morty3 =+ 1;
+          $morty8 =+ 1;
           break;
       default:
-          $morty1 =+ 1;
           break;
   }
 
@@ -147,24 +173,30 @@
   {
       case 'yes' :
           $morty1 =+ 1;
+          $morty3 =+ 1;
+          $morty4 =+ 1;
           break;
       case 'no' :
-          $morty1 =+ 1;
+          $morty5 =+ 1;
+          $morty7 =+ 1;
+          $morty8 =+ 1;
           break;
       case 'tried' :
-          $morty1 =+ 1;
+          $morty6 =+ 1;
+          $morty2 =+ 1;
+          $morty9 =+ 1;
+          $morty10 =+ 1;
           break;
       default:
-          $morty1 =+ 1;
           break;
   }
 
-  if ( $morty1 == 2){
-
-  } elseif (condition) {
-    # code...
+  $maxim = max($morty1, $morty2, $morty3, $morty4, $morty5, $morty6, $morty7, $morty8, $morty9, $morty10);
+  for ($i = 1; $i <= 10; $i++){
+    if(${'morty'.$i} == $maxim) {
+      $mortydefinitiu = $i;
+    }
   }
 
-  echo $morty1;
-  echo "<br>";
+  
 ?>
