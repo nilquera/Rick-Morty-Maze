@@ -1,4 +1,5 @@
-<?php
+<div id="dom-target" style="display: none;">
+  <?php
   echo "SSSSSSuuup Neil";
   echo "<br>";
 
@@ -197,6 +198,7 @@
       $mortydefinitiu = $i;
     }
   }
+  <script type="text/javascript" src="js/index.js"></script>
+  ?>
 
-  
-?>
+</div>
